@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      # Replace with your actual MongoDB Atlas connection string.
+      # If using a local MongoDB container, see the Optional section below.
+      - MONGO_URI=mongodb+srv://todo-app:zNpGi5ki4CWz47gk@cluster0.xsu99.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      # Let the frontend know where to find the backend.
+      # Using the service name "backend" lets Docker Compose resolve it internally.
+      - NEXT_PUBLIC_API_URL=http://backend:5000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

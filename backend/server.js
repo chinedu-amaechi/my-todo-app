@@ -7,16 +7,12 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
 
-
-
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Replace <username>, <password>, and <dbname> with your MongoDB Atlas details
 const mongoURI = process.env.MONGO_URI;
 
-// Connect to MongoDB Atlas
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB Connected..."))
@@ -42,12 +38,23 @@ const Todo = mongoose.model("Todo", todoSchema);
 
 // --- CRUD Routes ---
 
-// Create a new Todo
+// Create a new Todo with duplicate-task validation
 app.post("/todos", async (req, res) => {
   try {
-    const newTodo = new Todo({
-      text: req.body.text,
+    const { text } = req.body;
+    if (!text || !text.trim()) {
+      return res.status(400).json({ error: "Task text is required." });
+    }
+
+    // Check if a task with the same text (case-insensitive) exists
+    const duplicateTodo = await Todo.findOne({
+      text: { $regex: new RegExp(`^${text.trim()}$`, "i") },
     });
+    if (duplicateTodo) {
+      return res.status(400).json({ error: "Task already exists." });
+    }
+
+    const newTodo = new Todo({ text: text.trim() });
     const savedTodo = await newTodo.save();
     res.status(201).json(savedTodo);
   } catch (err) {
