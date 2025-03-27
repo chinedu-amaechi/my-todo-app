@@ -1,3 +1,7 @@
+# Docker Compose Configuration for Multi-Container Application
+# Defines services (backend and frontend), their dependencies, network configuration, and environment variables
+
+
 version: "3.8"
 services:
   backend:
