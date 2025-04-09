@@ -22,6 +22,69 @@ h1 {
   color: #444;
 }
 
+/* Login Form */
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-form h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.login-form input {
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+}
+
+.login-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.login-hint {
+  text-align: center;
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+/* Logout Container */
+.logout-container {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.logout-btn {
+  padding: 8px 16px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.logout-btn:hover {
+  background: #c82333;
+}
+
 /* Form Styling */
 form {
   background: #fff;
@@ -140,4 +203,13 @@ form button:hover {
 
 .delete-btn:hover {
   background: #c82333;
+}
+
+.no-tasks {
+  text-align: center;
+  color: #777;
+  padding: 20px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }

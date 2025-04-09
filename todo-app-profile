@@ -1,0 +1,28 @@
+#include <tunables/global>
+
+profile todo-app-profile flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  
+  network,
+  capability,
+  file,
+  umount,
+  
+  # Allow read access to the container filesystem
+  /var/lib/docker/** r,
+  
+  # Allow writes to specific application directories
+  /app/** rw,
+  /app/node_modules/** rw,
+  /tmp/** rw,
+  
+  # Allow network operations
+  network inet tcp,
+  network inet udp,
+  
+  # Prevent privileged operations
+  deny capability sys_admin,
+  deny capability sys_ptrace,
+  deny capability sys_module,
+}
